@@ -1,0 +1,58 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+up ip addr add 185.66.195.242/32 dev lo
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet static
+	address 151.80.64.178
+	netmask 255.255.255.255
+	pointopoint 151.80.64.254
+	gateway 151.80.64.254
+	dns-nameservers 8.8.8.8
+	dns-search freifunk.net
+	pre-up ip link set up dev eth0 && ip route add 151.80.64.254 dev eth0
+
+iface eth0 inet6 static
+	address 2001:41d0:c:95c::186/64
+	gateway 2001:41d0:c:9ff:ff:ff:ff:ff
+	pre-up ip -6 route add 2001:41d0:c:9ff:ff:ff:ff:ff dev eth0
+
+auto bb-fra-3 
+iface bb-fra-3 inet tunnel
+	mode gre
+	address 100.64.1.7
+	dstaddr 100.64.1.6
+	netmask 255.255.255.254
+	local 151.80.64.178
+	endpoint 185.66.194.1
+	mtu 1400
+	ttl 64
+
+iface bb-fra-3 inet6 static
+	address 2a03:2260:0:8a::2/64
+
+auto bb-dus
+iface bb-dus inet tunnel
+        mode gre
+        address 100.64.1.9
+        dstaddr 100.64.1.8
+        netmask 255.255.255.254
+        local 151.80.64.178
+        endpoint 185.66.193.1
+        mtu 1400
+        ttl 64
+	up iptables -t nat -A POSTROUTING -o bb-+ -j SNAT --to 185.66.195.242
+	up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o bb+ -j TCPMSS --set-mss 1280
+	up ip rule add iif bb-dus pref 10 table 42
+	up ip rule add iif bb-fra-3 pref 10 table 42
+	up ip -6 rule add iif bb-dus pref 10 table 42
+	up ip -6 rule add iif bb-fra-3 pref 10 table 42
+
+iface bb-dus inet6 static
+        address 2a03:2260:0:8b::2/64
+
