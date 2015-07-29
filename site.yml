@@ -6,3 +6,4 @@
     - snmpd
     - syslog
     - docker
+    - bird

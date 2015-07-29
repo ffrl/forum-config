@@ -1,0 +1,29 @@
+---
+
+- name: adding repo
+  apt_repository: repo='deb http://bird.network.cz/debian/ jessie main'
+  register: repo
+
+- name: adding repo key
+  apt_key: url=http://bird.network.cz/debian/apt.key
+  when: repo|changed
+
+- name: updating cache
+  apt: update_cache=yes
+  when: repo|changed
+
+- name: installing package
+  apt: name=bird state=installed
+
+- name: configuring service
+  template: src={{ item }}.conf.j2 dest=/etc/bird/{{ item }}.conf
+  notify: reload 
+  with_items:
+    - bird
+    - bird6
+
+- name: enabling service
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - bird
+    - bird6
