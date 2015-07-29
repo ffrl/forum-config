@@ -3,6 +3,7 @@
 - hosts: forum
 
   roles:
+    - common
     - snmpd
     - syslog
     - docker

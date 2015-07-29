@@ -1,0 +1,4 @@
+---
+
+- name: network-reload
+  service: name=networking state=reloaded

@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+allow-hotplug eth0
+
+iface eth0 inet static
+address 151.80.64.178
+netmask 255.255.255.255
+pointopoint 151.80.64.254
+gateway 151.80.64.254
+dns-nameservers 8.8.8.8
+pre-up ip link set up dev eth0
+post-up ip route add 185.66.194.1 via 151.80.64.254
+post-up ip route add 185.66.193.1 via 151.80.64.254
+post-up ip rule add iif tun-dus lookup 42
+post-up ip rule add iif tun-fra lookup 42
+post-up ip rule add from 185.66.195.242/32 lookup 42
+post-up ip rule add from 172.17.0.0/16 lookup 42
+post-up ip -6 rule add from 2a03:2260:2000:1::2/128 lookup 42
+post-up iptables -t mangle -A INPUT -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+
+iface eth0 inet6 static
+address 2001:41d0:c:95c::178/64
+gateway 2001:41d0:c:9ff:ff:ff:ff:ff
+pre-up ip -6 route add 2001:41d0:c:9ff:ff:ff:ff:ff dev eth0

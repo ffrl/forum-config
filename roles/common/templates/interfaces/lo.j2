@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+auto lo
+
+iface lo inet loopback
+up ip addr add 185.66.195.242/32 dev lo
+up ip -6 addr add 2a03:2260:2000:1::2/128 dev lo

@@ -1,0 +1,10 @@
+---
+
+- name: configuring network
+  template: src=interfaces/{{ item }}.j2 dest=/etc/network/interfaces.d/{{ item }}
+  notify: network-reload
+  with_items:
+    - lo
+    - eth0
+    - tun-dus
+    - tun-fra

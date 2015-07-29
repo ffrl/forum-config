@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+auto tun-fra
+
+iface tun-fra inet tunnel
+mode gre
+address 100.64.1.7
+dstaddr 100.64.1.6
+netmask 255.255.255.254
+local 151.80.64.178
+endpoint 185.66.194.1
+mtu 1400
+ttl 64
+
+iface tun-fra inet6 static
+address 2a03:2260:0:8a::2/64
