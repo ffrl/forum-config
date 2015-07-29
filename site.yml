@@ -1,0 +1,8 @@
+---
+
+- hosts: forum
+
+  roles:
+    - snmpd
+    - syslog
+    - docker
