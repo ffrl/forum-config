@@ -23,8 +23,11 @@ source src {
 };
 
 destination observium {
-  udp("observium.freifunk-rheinland.net");
-  udp6("log.fluxent.de" port(51400));
+  udp6("observium.freifunk-rheinland.net");
+};
+
+destination fluxent {
+  udp6("obs.fluxent.de");
 };
 
 log {
@@ -32,3 +35,7 @@ log {
   destination(observium);
 };
 
+log {
+  source(src);
+  destination(fluxent);
+};
