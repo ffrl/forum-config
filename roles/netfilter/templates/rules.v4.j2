@@ -7,5 +7,5 @@ COMMIT
 
 # Adjust maximum segment size on tunnel interfaces to avoid TCP breakage
 *filter
--A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+-A FORWARD -o tun+ -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
 COMMIT
