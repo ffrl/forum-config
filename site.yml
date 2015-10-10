@@ -8,3 +8,4 @@
     - syslog
     - docker
     - bird
+    - netfilter

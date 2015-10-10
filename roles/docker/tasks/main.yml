@@ -11,10 +11,12 @@
 
 - name: creating group
   group: name=docker system=yes state=present
-  notify: restart
 
 - name: creating user
   user: name=docker system=yes state=present
+
+- name: Configure service
+  template: src=defaults.j2 dest=/etc/default/docker
   notify: restart
 
 - name: enabling service

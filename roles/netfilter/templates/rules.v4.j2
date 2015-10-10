@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+# Translate source IP, because NATs are good
+*nat
+-A POSTROUTING -o tun+ -j SNAT --to-source 185.66.195.242
+COMMIT
+
+# Adjust maximum segment size on tunnel interfaces to avoid TCP breakage
+*filter
+-A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+COMMIT

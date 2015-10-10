@@ -1,0 +1,14 @@
+---
+
+- name: Install package
+  apt: name=netfilter-persistent state=installed
+
+- name: Create configuration directory
+  file: dest=/etc/iptables state=directory
+
+- name: Configure service
+  template: src=rules.v4.j2 dest=/etc/iptables/rules.v4
+  notify: restart
+
+- name: Enable service
+  service: name=netfilter-persistent state=started enabled=yes
