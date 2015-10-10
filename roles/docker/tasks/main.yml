@@ -1,23 +1,23 @@
 ---
 
-- name: installing python-apt
-  apt: name=python-apt state=present
+- name: Install requirements
+  apt: name=python-apt state=installed
 
-- name: adding backports repo
+- name: Add package repository
   apt_repository: repo='deb http://http.debian.net/debian jessie-backports main'
 
-- name: installing package
+- name: Install package
   apt: name=docker.io state=present update_cache=yes
 
-- name: creating group
+- name: Create system group
   group: name=docker system=yes state=present
 
-- name: creating user
+- name: Create system user
   user: name=docker system=yes state=present
 
 - name: Configure service
   template: src=defaults.j2 dest=/etc/default/docker
-  notify: restart
+  notify: restart docker
 
-- name: enabling service
+- name: Enable service
   service: name=docker state=started enabled=yes
