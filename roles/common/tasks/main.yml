@@ -6,5 +6,3 @@
   with_items:
     - lo
     - eth0
-    - tun-dus
-    - tun-fra

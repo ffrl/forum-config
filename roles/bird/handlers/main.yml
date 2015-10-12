@@ -1,6 +1,0 @@
----
-- name: reload
-  service: name={{ item }} state=reloaded
-  with_items:
-    - bird
-    - bird6

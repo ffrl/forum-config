@@ -3,6 +3,3 @@
 auto lo
 
 iface lo inet loopback
-post-up ip addr add 185.66.195.242/32 dev lo
-post-up ip -6 addr add 2a03:2260:2000:1::2/128 dev lo
-post-up iptables -t nat -I POSTROUTING -o tun+ -j SNAT --to-source 185.66.195.242

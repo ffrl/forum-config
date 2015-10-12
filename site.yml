@@ -7,5 +7,4 @@
     - snmpd
     - syslog
     - docker
-    - bird
     - netfilter
