@@ -26,16 +26,7 @@ destination observium {
   udp6("observium.freifunk-rheinland.net");
 };
 
-destination fluxent {
-  udp6("obs.fluxent.de");
-};
-
 log {
   source(src);
   destination(observium);
-};
-
-log {
-  source(src);
-  destination(fluxent);
 };
